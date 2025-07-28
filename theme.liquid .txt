@@ -1,0 +1,83 @@
+<!doctype html>
+<html class="no-js no-touch supports-no-cookies" lang="{{ request.locale.iso_code }}">
+  <head>
+    <!-- ShareMyStars Script -->
+    <script>
+      window.SHAREMYSTARS = {
+        id: '8b629092-aae4-41f8-a7f8-8152fa10763b',
+        key: 'bb230b31-fe74-435d-a6cb-06e35bcb4f36'
+      };
+    </script>
+    <script type="text/javascript" src="https://assets.sharemystars.com/trust-widget.js" defer></script>
+
+    <!-- Shopify Head Includes (loads theme styles & metadata) -->
+    {%- render 'head' -%}
+
+    <!-- Content for Shopify Apps -->
+    {{ content_for_header }}
+
+    <!-- Custom CSS by Emeer -->
+    {{ 'custom.css' | asset_url | stylesheet_tag }} 
+    {% comment %} Added by Emeer 15-7-2025 {% endcomment %}
+
+    <!-- Inline Widget Adjustments -->
+    {% style %}
+      body .Sea-Accessibility_WidgetIcon {
+        left: 1px !important;
+      }
+    {% endstyle %}
+  </head>
+
+  <body
+    id="{{ page_title | handle }}"
+    class="template-{{ template.name | handle }} grid-{{ settings.grid_style }}{% if customer %} customer-logged-in{% endif %}{% if settings.animations_enable %} aos-initialized{% endif %}{% if settings.product_grid_outline %} has-line-design{% endif %}"
+    data-animations="{{ settings.animations_enable }}"
+  >
+    {%- render 'loading' -%}
+
+    <a class="in-page-link visually-hidden skip-link" data-skip-content href="#MainContent">
+      {{- 'general.accessibility.skip_to_content' | t -}}
+    </a>
+
+    <div class="container" data-site-container>
+      <div class="header-sections">
+        {% sections 'group-header' %}
+      </div>
+
+      {% sections 'group-overlay' %}
+
+      <!-- CONTENT -->
+      <main role="main" id="MainContent" class="main-content">
+        {{ content_for_layout }}
+      </main>
+    </div>
+
+    {% sections 'group-pre-footer' %}
+
+    <footer class="footer-sections">
+      {% sections 'group-footer' %}
+    </footer>
+
+    {%- if settings.swatches_type != 'disabled' -%}
+      {% render 'template-swatch' %}
+    {%- endif -%}
+
+    {% render 'zoom-pswp' %}
+
+    {%- if template.name != 'product' and settings.show_scroll_top_button -%}
+      <button
+        type="button"
+        class="btn btn--scroll-top btn--black btn--solid"
+        aria-label="{{ 'general.accessibility.scroll_to_top' | t }}"
+        data-scroll-top-button
+      >
+        {%- render 'icon-arrow-up' -%}
+      </button>
+    {%- endif -%}
+
+    <!-- Marketing / Third-Party Scripts Area -->
+    <!-- Paste marketing code or third party scripts below this comment line ============== -->
+
+    <!-- And above this comment line ================================================== -->
+  </body>
+</html>
